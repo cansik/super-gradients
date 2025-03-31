@@ -1386,9 +1386,9 @@ def get_affine_matrix(
 
     # Center in pixels
     center_m = np.eye(3)
-    center = (input_size[0] // 2, input_size[1] // 2)
-    center_m[0, 2] = -center[1]
-    center_m[1, 2] = -center[0]
+    center = (input_size[1] // 2, input_size[0] // 2)
+    center_m[0, 2] = -center[0]
+    center_m[1, 2] = -center[1]
 
     # Rotation and scale
     rotation_m = np.eye(3)
@@ -1411,7 +1411,7 @@ def apply_affine_to_bboxes(targets, targets_seg, target_size, M):
     num_gts = len(targets)
     if num_gts == 0:
         return targets
-    twidth, theight = target_size
+    theight, twidth = target_size
     # targets_seg = [B x w x h]
     # if any is_not_nan in axis = 1
     seg_is_present_mask = np.logical_or.reduce(~np.isnan(targets_seg), axis=1)
